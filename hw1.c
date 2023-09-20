@@ -1,11 +1,11 @@
-/*********************************************
+/**********************************************************************
  * Id: Gurtej Saini <sain3777@vandals.uidaho.edu>
  *
- * Compile: gcc -std=c99 -Wall -Wextra -Wpedantic -Werror hw1.c
- * Run: ./a.out
+ * Compile: gcc -std=c99 -Wall -Wextra -Wpedantic -Werror hw1.c -o hw1
+ * Run: ./hw1
  *
- * Split input into words/tokens
- *********************************************/
+ * Split input into words/tokens.
+ **********************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,11 +13,35 @@
 
 #define INPUT_LENGTH 500
 
+// Tokenize input string "s" into an array of token strings "args"
+int makearg(char *s, char ***args);
+
+int main(void)
+{
+    printf("Gimme a line of input: ");
+    char input[INPUT_LENGTH];
+    fgets(input, INPUT_LENGTH, stdin);
+
+    char **argv;
+    int argc = makearg(input, &argv);
+
+    printf("That line contains %d words. Here they are:\n", argc);
+    for (int i = 0; i < argc; i++)
+    {
+        printf("%s\n", argv[i]);
+    }
+
+    free(argv);
+
+    return EXIT_SUCCESS;
+}
+
+// Tokenize input string "s" into an array of token strings "args"
 int makearg(char *s, char ***args)
 {
     const char *whitespace = " \f\n\r\t\v"; // from https://en.cppreference.com/w/c/string/byte/isspace
-
     int count = 0;
+
     char **tokens = malloc(sizeof *tokens); // string array (length = 1)
     if (!tokens) // allocation failed
     {
@@ -42,22 +66,4 @@ int makearg(char *s, char ***args)
 
     *args = tokens;
     return count;
-}
-
-int main()
-{
-    printf("Gimme a line of input: ");
-    char input[INPUT_LENGTH];
-    fgets(input, INPUT_LENGTH, stdin);
-
-    char **argv;
-    int argc = makearg(input, &argv);
-
-    printf("That line contains %d words. Here they are:\n", argc);
-    for (int i = 0; i < argc; i++)
-    {
-        printf("%s\n", argv[i]);
-    }
-
-    return 0;
 }
