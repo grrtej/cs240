@@ -1,14 +1,11 @@
 CFLAGS = -std=c99 -Wpedantic -Wall -Wextra
 
-# Build: make
-# Run: ./msh
-all: msh
+bin = msh
 
-# Build (Debug): make clean debug
-# Run GDB: gdb ./msh
-# Run Valgrind: valgrind --leak-check=full ./msh
+all: $(bin)
+
 debug: CFLAGS += -O0 -g
-debug: msh
+debug: $(bin)
 
 msh: msh.o line.o tok.o
 
@@ -17,6 +14,6 @@ line.o: line.c line.h
 tok.o: tok.c tok.h
 
 clean:
-	$(RM) msh msh.o line.o tok.o
+	$(RM) $(bin) msh.o line.o tok.o
 
 .PHONY: all debug clean

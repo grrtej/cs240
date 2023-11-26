@@ -1,11 +1,13 @@
 CFLAGS = -std=c99 -Wpedantic -Wall -Wextra
 
-all: hw1
+bin = hw1
+
+all: $(bin)
 
 debug: CFLAGS += -O0 -g
-debug: hw1
+debug: $(bin)
 
 clean:
-	$(RM) hw1
+	$(RM) $(bin)
 
 .PHONY: all debug clean
